@@ -1,4 +1,4 @@
-package CoreJava.MethodOverriding;
+package CoreJava.Method_Overriding;
 
 public class Animal {
     void speak(){
