@@ -1,7 +1,6 @@
 package CoreJava.StaticKeyword;
 
 public class Main {
-    @SuppressWarnings("unused")
     public static void main(String[] args) {
 
         Employee hasan = new Employee();

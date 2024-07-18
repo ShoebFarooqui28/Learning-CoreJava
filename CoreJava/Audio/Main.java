@@ -11,7 +11,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        File file = new File("D:\\Learning CoreJava\\CoreJava\\Audio\\BlackBall.wav");
+        File file = new File("D:\\Learning-CoreJava\\CoreJava\\Audio\\BlackBall.wav");
 
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
 
@@ -20,14 +20,14 @@ public class Main {
 
         String response = "";
 
+        System.out.println("Blackball - SOS x  30KEY!");
+        System.out.println("'P' = Play, 'S' = Stop, 'R' = Reset, 'Q' = Quit");
+        System.out.println("Enter your response : ");
+
         while(!response.equals("Q")){
-            System.out.println("Blackball - SOS x  30KEY!");
-            System.out.println("'P' = Play, 'S' = Stop, 'R' = Reset, 'Q' = Quit");
-            System.out.println("Enter your response : ");
 
             response = sc.nextLine();
             response = response.toUpperCase();
-            sc.close();
 
             switch (response) {
 
@@ -52,5 +52,7 @@ public class Main {
                 break;
             }
         }
+        System.out.println("Thank you for playing the song!");
+        sc.close();
     }
 }
