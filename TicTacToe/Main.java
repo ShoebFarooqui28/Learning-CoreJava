@@ -30,7 +30,7 @@ public class Main {
                 if(gameOver){
                     System.out.println("Player "+player+" has won!");
                     printBoard(board);
-
+                    scanner.close();
                 }
                 else{
                     if (player == 'X') {
