@@ -38,7 +38,6 @@ public class Main {
         frame.add(label);
         frame.revalidate();
     }
-
     void scaleImage(){
 
     }
