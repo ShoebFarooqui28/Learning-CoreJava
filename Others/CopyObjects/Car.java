@@ -1,4 +1,4 @@
-package BasicJava.CopyObjects;
+package Others.CopyObjects;
 
 public class Car {
     private String make;

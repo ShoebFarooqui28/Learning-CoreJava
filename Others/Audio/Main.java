@@ -1,4 +1,4 @@
-package BasicJava.Audio;
+package Others.Audio;
 
 import java.io.File;
 import java.io.IOException;

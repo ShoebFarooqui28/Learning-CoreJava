@@ -1,4 +1,4 @@
-package BasicJava.CopyObjects;
+package Others.CopyObjects;
 
 public class Main {
     public static void main(String[] args) {

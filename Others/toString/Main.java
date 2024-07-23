@@ -1,4 +1,4 @@
-package BasicJava.toString;
+package Others.toString;
 
 public class Main {
     public static void main(String[] args) {

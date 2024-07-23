@@ -1,4 +1,4 @@
-package BasicJava.Super;
+package Others.Super;
 
 public class Hero extends Person{
     String  power; 

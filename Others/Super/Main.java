@@ -1,4 +1,4 @@
-package BasicJava.Super;
+package Others.Super;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package BasicJava.toString;
+package Others.toString;
 
 public class Car {
     String make = "Toyota";

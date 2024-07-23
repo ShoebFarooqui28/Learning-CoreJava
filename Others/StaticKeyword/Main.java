@@ -1,4 +1,4 @@
-package BasicJava.StaticKeyword;
+package Others.StaticKeyword;
 
 public class Main {
     public static void main(String[] args) {
