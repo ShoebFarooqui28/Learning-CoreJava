@@ -1,4 +1,4 @@
-package TicTacToeGUI;
+package Projects.TicTacToeGUI;
 
 import java.util.*;
 import java.awt.*;
