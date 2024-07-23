@@ -1,4 +1,4 @@
-package BasicJava.Label;
+package GUI.Label;
 
 import java.awt.Color;
 import java.awt.Font;

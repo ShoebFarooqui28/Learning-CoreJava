@@ -1,4 +1,4 @@
-package BasicJava.Panels;
+package GUI.Panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package BasicJava.GUI;
+package GUI.BasicGUI;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
