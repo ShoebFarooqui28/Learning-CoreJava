@@ -18,6 +18,6 @@ public class MyFrame extends JFrame{
         this.setIconImage(image.getImage());
 
         this.getContentPane().setBackground(new Color(0x880808)); //used hex code for own new color
-    
+        
     }
 }
