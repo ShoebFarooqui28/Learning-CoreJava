@@ -1,44 +1,44 @@
+// WeatherAppGUI.java
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
+import org.json.simple.JSONObject;
 
+public class WeatherAppGUI extends JFrame {
+    private JSONObject weatherData;
 
-public class WeatherAppGUI extends JFrame{
-    public WeatherAppGUI(){
-        //Setting up the GUI.
+    public WeatherAppGUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
-        setSize(500,800);
+        setSize(1000, 800);
         setLocationRelativeTo(null);
         setLayout(null);
         setResizable(false);
         setTitle("Simply Weather!");
         getContentPane().setBackground(new Color(0xc4bbf0));
 
-        //Calling the iconTitle() method.   
-        iconTitle();   
-
-        //Calling the addGuiComponents() method.
+        iconTitle();
         addGuiComponents();
-
-
     }
 
-    //Declaring the properties of the GUI Components.
-    public void addGuiComponents(){
-        //Search Field
+    public void addGuiComponents() {
         RoundedTextField searchBar = new RoundedTextField(15);
         searchBar.setText("Enter Location");
         searchBar.setBounds(15, 15, 380, 60);
@@ -48,36 +48,25 @@ public class WeatherAppGUI extends JFrame{
         searchBar.setBorder(null);
         searchBar.addFocusListener(new FocusListener() {
             @Override
-            public void focusGained(FocusEvent event){
+            public void focusGained(FocusEvent event) {
                 if (searchBar.getText().equals("Enter Location")) {
-                        searchBar.setText("");
+                    searchBar.setText("");
                 }
             }
+
             @Override
-            public void focusLost(FocusEvent event){
+            public void focusLost(FocusEvent event) {
                 if (searchBar.getText().equals("")) {
-                        searchBar.setText("Enter Location");
+                    searchBar.setText("Enter Location");
                 }
-            }   
+            }
         });
         add(searchBar);
 
-        //Search Button
-        JButton searchButton = new JButton(loadImage("src\\Assets\\search-icon.png",60,60));
-        searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        searchButton.setBounds(410, 15, 60, 60);
-        searchButton.setBackground(new Color(0xc4bbf0));
-        searchButton.setBorder(null);
-        searchButton.setFocusPainted(false);
-        searchButton.setContentAreaFilled(false);
-        add(searchButton);
+        JLabel weather_ConditionImage = new JLabel(loadImage("src\\Assets\\cloudy-icon.png", 256, 256));
+        weather_ConditionImage.setBounds(115, 160, 256, 256);
+        add(weather_ConditionImage);
 
-        //Weather Image
-        JLabel weatherConditionImage = new JLabel(loadImage("src\\Assets\\cloudy-icon.png",256,256));
-        weatherConditionImage.setBounds(115,160,256,256);
-        add(weatherConditionImage);
-
-        //Temperature Title
         JLabel tempText = new JLabel();
         tempText.setText("10° C");
         tempText.setBounds(145, 400, 200, 100);
@@ -87,7 +76,6 @@ public class WeatherAppGUI extends JFrame{
         tempText.setFont(new Font("Space Grotesk", Font.BOLD, 60));
         add(tempText);
 
-        //Weather Condition Description
         JLabel weatherConditionDesc = new JLabel();
         weatherConditionDesc.setText("Cloudy");
         weatherConditionDesc.setFont(new Font("Space Grotesk", Font.BOLD, 40));
@@ -97,72 +85,111 @@ public class WeatherAppGUI extends JFrame{
         weatherConditionDesc.setVerticalAlignment(JLabel.CENTER);
         add(weatherConditionDesc);
 
-        //Humidity Icon
-        JLabel humidityIcon = new JLabel(loadImage("src\\Assets\\humidity.png",60,60));
+        JLabel humidityIcon = new JLabel(loadImage("src\\Assets\\humidity.png", 60, 60));
         humidityIcon.setBounds(110, 580, 60, 60);
-        //humidityIcon.setBackground(Color.RED);
-        //humidityIcon.setOpaque(true);
         add(humidityIcon);
 
-        //Humidity Text
         JLabel humidityText = new JLabel();
         humidityText.setText("<html><b>Humidity</b> : 100%</html>");
         humidityText.setBounds(180, 580, 200, 60);
         humidityText.setFont(new Font("Space Grotesk", Font.PLAIN, 20));
         humidityText.setHorizontalAlignment(JLabel.CENTER);
         humidityText.setVerticalAlignment(JLabel.CENTER);
-        //humidityText.setBackground(Color.GREEN);
-        //humidityText.setOpaque(true);
-        add(humidityText);        
+        add(humidityText);
 
-        //Wind Icon
-        JLabel windIcon = new JLabel(loadImage("src\\Assets\\wind.png",50, 50));
-        windIcon.setBounds(110, 680,60,60);
-        //windIcon.setBackground(Color.RED);
-        //windIcon.setOpaque(true);
+        JLabel windIcon = new JLabel(loadImage("src\\Assets\\wind.png", 50, 50));
+        windIcon.setBounds(110, 680, 60, 60);
         add(windIcon);
 
-        //Wind Text
         JLabel windText = new JLabel();
         windText.setText("<html><b>Wind</b> : 100 km/hr</html>");
         windText.setBounds(180, 680, 200, 60);
         windText.setFont(new Font("Space Grotesk", Font.PLAIN, 20));
         windText.setHorizontalAlignment(JLabel.CENTER);
         windText.setVerticalAlignment(JLabel.CENTER);
-        //windText.setBackground(Color.GREEN);
-        //windText.setOpaque(true);
-        add(windText); 
+        add(windText);
+
+        JPanel sidepanel = new JPanel();
+        sidepanel.add(day1)
+
+        JButton searchButton = new JButton(loadImage("src\\Assets\\search-icon.png", 60, 60));
+        searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        searchButton.setBounds(410, 15, 60, 60);
+        searchButton.setBackground(new Color(0xc4bbf0));
+        searchButton.setBorder(null);
+        searchButton.setFocusPainted(false);
+        searchButton.setContentAreaFilled(false);
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userInput = searchBar.getText();
+                if (userInput.replaceAll("\\s", "").length() <= 0) {
+                    return;
+                }
+
+                weatherData = WeatherBackEnd.getWeatherData(userInput);
+                if (weatherData == null) {
+                    System.out.println("Error: Unable to fetch weather data.");
+                    return;
+                }
+
+                String weatherCondition = (String) weatherData.get("weatherCondition");
+                if (weatherCondition == null) {
+                    System.out.println("Error: Weather condition is null.");
+                    return;
+                }
+
+                switch (weatherCondition) {
+                    case "Clear":
+                        weather_ConditionImage.setIcon(loadImage("src\\Assets\\clear-icon.png", 256, 256));
+                        break;
+                    case "Cloudy":
+                        weather_ConditionImage.setIcon(loadImage("src\\Assets\\cloudy-icon.png", 256, 256));
+                        break;
+                    case "Rainy":
+                        weather_ConditionImage.setIcon(loadImage("src\\Assets\\rainy-icon.png", 256, 256));
+                        break;
+                    case "Snow":
+                        weather_ConditionImage.setIcon(loadImage("src\\Assets\\snow-icon.png", 256, 256));
+                        break;
+                    default:
+                        weather_ConditionImage.setIcon(loadImage("src\\Assets\\unknown-icon.png", 256, 256));
+                        break;
+                }
+
+                double temperature = (double) weatherData.get("temperature");
+                tempText.setText(temperature+" C");
+
+                weatherConditionDesc.setText(weatherCondition);
+
+                long humidity = (long) weatherData.get("humidity");
+                humidityText.setText("<html><b>Humidity</b> : " + humidity + "%</html>");
+
+                double wind = (double) weatherData.get("windSpeed");
+                windText.setText("<html><b>Wind</b> : " + wind + " km/hr</html>");
+            }
+        });
+        add(searchButton);
     }
-    
-    //Icon & Title for the frame.
-    private void iconTitle(){
+
+    private void iconTitle() {
         ImageIcon icon = new ImageIcon("src\\Assets\\weather-title-icon.jpg");
         setIconImage(icon.getImage());
-
-        
-    }
-    
-    //Creates images in our GUI Components
-    private ImageIcon loadImage (String resourcePath, int width, int height){
-    try {
-
-        //Reads the image file from the given path
-        BufferedImage image = ImageIO.read(new File(resourcePath));
-
-        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resizedImage.createGraphics();
-        g2d.drawImage(image.getScaledInstance(width, height, image.SCALE_SMOOTH), 0, 0, width, height, null);
-        g2d.dispose();
-        
-        //Returns an image icon so that our component can render it
-        return new ImageIcon(resizedImage);
-
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    System.out.println("Could not find resuource");
-    return null;
     }
 
+    private ImageIcon loadImage(String resourcePath, int width, int height) {
+        try {
+            BufferedImage image = ImageIO.read(new File(resourcePath));
+            BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = resizedImage.createGraphics();
+            g2d.drawImage(image.getScaledInstance(width, height, Image.SCALE_SMOOTH), 0, 0, width, height, null);
+            g2d.dispose();
+            return new ImageIcon(resizedImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Could not find resource");
+        return null;
+    }
 
 }

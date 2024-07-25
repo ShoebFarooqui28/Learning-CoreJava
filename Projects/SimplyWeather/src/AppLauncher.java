@@ -5,7 +5,7 @@ public class AppLauncher {
         SwingUtilities.invokeLater(new Runnable() {
            @Override
            public void run(){
-                new WeatherAppGUI().setVisible(true);;
+                new WeatherAppGUI().setVisible(true);
            } 
         });
     }

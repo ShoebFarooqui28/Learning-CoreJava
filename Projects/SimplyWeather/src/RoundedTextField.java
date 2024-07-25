@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 
 
 public class RoundedTextField extends JTextField{
+    
     public int cornerRadius;
 
     public RoundedTextField(int cornerRadius){
@@ -34,8 +35,11 @@ public class RoundedTextField extends JTextField{
         g2d.dispose();
 
     }
+    
     @Override
     public Insets getInsets(){
         return new Insets(5, 15, 5, 5);
     }
+
 }
+
