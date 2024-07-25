@@ -6,6 +6,11 @@ import java.net.http.HttpConnectTimeoutException;
 import java.rmi.server.UID;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,6 +19,7 @@ import org.json.simple.parser.JSONParser;
 public class WeatherBackEnd {
 
     //Fetching weather data from the API method.
+    @SuppressWarnings("unchecked")
     public static JSONObject getWeatherData(String locationName){
         //Fetching location Co-ordinates using the Geolocation API.
         JSONArray locationData = getLocationData(locationName);
@@ -41,12 +47,12 @@ public class WeatherBackEnd {
             }
             else{
                 //Storing the API results.
-                StringBuilder resultJSON = new StringBuilder();
+                StringBuilder resultJSONString = new StringBuilder();
                 Scanner scanner = new Scanner(conn.getInputStream());
 
                 //Readind and Storing the API result into StringBuilder.
                 while(scanner.hasNext()){
-                    resultJSON.append(scanner.nextLine());
+                    resultJSONString.append(scanner.nextLine());
                 }
 
                 //Closing the scanner.
@@ -57,7 +63,7 @@ public class WeatherBackEnd {
 
                 //Parsing the JSON String to JSON Object.
                 JSONParser parser = new JSONParser();
-                JSONObject resultsJSONObject = (JSONObject) parser.parse(resultJSON.toString());
+                JSONObject resultsJSONObject = (JSONObject) parser.parse(resultJSONString.toString());
 
 
                 //Retrieving Hourly Data.
@@ -83,13 +89,16 @@ public class WeatherBackEnd {
                 JSONArray windData = (JSONArray) hourlyData.get("wind_speed_10m");
                 double windSpeed = (double) windData.get(currentIndex);
 
+
                 //Building the weather JSON Data Object that will used to access these datas in the front end.
                 JSONObject weatherData = new JSONObject();
                 weatherData.put("temperature", temperature);
                 weatherData.put("weatherCondition", weatherCondition);
                 weatherData.put("humidity", humidity);
                 weatherData.put("windSpeed", windSpeed);
-                
+
+                Map<String, Integer> newMap = new HashMap<>(findIndexofFiveDays(getNextFiveDaysTime(), timeList));
+                printIndexMap(newMap);
                 return weatherData;
             }
         } 
@@ -223,5 +232,68 @@ public class WeatherBackEnd {
         String formattedDateTime = currentDateTime.format(formatter);
 
         return formattedDateTime;
+    }
+
+    //Getting the next 5 Day time
+    public static List<String> getNextFiveDaysTime(){
+        //List to hold the future times
+        List<String> nextFiveDaysTime = new ArrayList<>();
+
+        //Defining the numbers of hours to add
+        int[] hours = {24,48,72,96,120};
+
+        //Getting the current time
+        LocalDateTime curDateTime = LocalDateTime.now();
+
+        //Formatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH':00'");  
+
+        //Calculating the future time
+        for(int i :hours){
+            LocalDateTime future24hr = curDateTime.plusHours(i);
+            nextFiveDaysTime.add(future24hr.format(formatter));
+        }
+
+
+        return nextFiveDaysTime;
+    }
+
+    public static Map<String, Integer> findIndexofFiveDays(List<String> nextFiveDaysTime, JSONArray timeList){
+        Map<String, Integer> indexMap = new HashMap<>();
+        for(String i : nextFiveDaysTime){
+            for(int j = 0; j < timeList.size(); j++){
+                String jsontime = (String) timeList.get(j);
+                if(i.equalsIgnoreCase(jsontime)){
+                    indexMap.put(i,j);
+                    break;
+                }
+            }
+        }
+        return indexMap;
+    }
+
+    public static void printIndexMap(Map<String, Integer> indexMap) {
+        for (Map.Entry<String, Integer> entry : indexMap.entrySet()) {
+            String time = entry.getKey();
+            Integer index = entry.getValue();
+            if (index != -1) {
+                System.out.println("Time: " + time + " is at index: " + index);
+            } else {
+                System.out.println("Time: " + time + " is not found in timeList.");
+            }
+        }
+    }
+    
+    public static int[] hashMapToArr(HashMap<String, Integer> newMap){
+        //Collecting the values of the map
+        Collection<Integer> values = newMap.values();
+        Integer[] integerArray = values.toArray(new Integer[0]);
+        
+        //Converting the Integer array to int array
+        int[] intArray = new int[integerArray.length];
+        for(int i = 0;i<integerArray.length;i++){
+            intArray[i] = integerArray[i];
+        }
+        return intArray;
     }
 }
