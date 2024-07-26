@@ -2,8 +2,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpConnectTimeoutException;
-import java.rmi.server.UID;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,7 +26,7 @@ public class WeatherBackEnd {
         //Fetching location Co-ordinates using the Geolocation API.
         JSONArray locationData = getLocationData(locationName);
         if (locationData == null) {
-            System.out.println("Location not entered.");
+            System.out.println("Location data could not be fetched");
         }
         
         //Extracting latitude and longitude data.
@@ -73,7 +75,7 @@ public class WeatherBackEnd {
                 JSONArray timeList = (JSONArray) hourlyData.get("time");
                 int currentIndex = findIndex(timeList);
 
-                //Getting Temperature
+                //Getting Temperature 
                 JSONArray temperatureData = (JSONArray) hourlyData.get("temperature_2m");
                 double temperature = (double) temperatureData.get(currentIndex);
 
@@ -92,13 +94,53 @@ public class WeatherBackEnd {
 
                 //Building the weather JSON Data Object that will used to access these datas in the front end.
                 JSONObject weatherData = new JSONObject();
+
+                //Today
                 weatherData.put("temperature", temperature);
                 weatherData.put("weatherCondition", weatherCondition);
                 weatherData.put("humidity", humidity);
                 weatherData.put("windSpeed", windSpeed);
 
-                Map<String, Integer> newMap = new HashMap<>(findIndexofFiveDays(getNextFiveDaysTime(), timeList));
-                printIndexMap(newMap);
+                //Next 5 days Temps
+                weatherData.put("sideTemperature1", getTemperatureForDay(hourlyData,0));
+                weatherData.put("sideTemperature2", getTemperatureForDay(hourlyData,1));
+                weatherData.put("sideTemperature3", getTemperatureForDay(hourlyData,2));
+                weatherData.put("sideTemperature4", getTemperatureForDay(hourlyData,3));
+                weatherData.put("sideTemperature5", getTemperatureForDay(hourlyData,4));
+
+                //Next 5 days Condition
+                weatherData.put("sideWeatherConditionkey1", (convertSideWeatherCodetoCondition(getSideWeatherCode(hourlyData, 0))));
+                weatherData.put("sideWeatherConditionkey2", (convertSideWeatherCodetoCondition(getSideWeatherCode(hourlyData, 1))));
+                weatherData.put("sideWeatherConditionkey3", (convertSideWeatherCodetoCondition(getSideWeatherCode(hourlyData, 2))));
+                weatherData.put("sideWeatherConditionkey4", (convertSideWeatherCodetoCondition(getSideWeatherCode(hourlyData, 3))));
+                weatherData.put("sideWeatherConditionkey5", (convertSideWeatherCodetoCondition(getSideWeatherCode(hourlyData, 4))));
+
+                
+                //Printing the Hashmap
+                Map<String, Integer> newMap = new HashMap<>(findIndexofFiveDays(getNextFiveDaysTime(), timeList)); 
+                
+                //Converting Integer[] Array to int[] Array
+                Collection<Integer> values = newMap.values();
+                Integer[] integerArray = values.toArray(new Integer[0]);
+                
+                //Converting the Integer array to int array
+                int[] intArray = new int[integerArray.length];
+                for(int i = 0;i<integerArray.length;i++){
+                    intArray[i] = integerArray[i];
+                }
+                int[] ArrayIndex = intArray;;
+
+                //Bubble Sorting the Arary
+                for (int i = 0; i < ArrayIndex.length - 1; i++) {
+                    for (int j = 0; j < ArrayIndex.length - i - 1;  j++){
+                        if (ArrayIndex[j] > ArrayIndex[j + 1]) {
+                            int temp = ArrayIndex[j];
+                            ArrayIndex[j] = ArrayIndex[j + 1];
+                            ArrayIndex[j + 1] = temp;
+                        }
+                    }
+                }
+
                 return weatherData;
             }
         } 
@@ -125,6 +167,9 @@ public class WeatherBackEnd {
         
         else if(weatherCode >= 71L && weatherCode <= 77L ){
             weatherCondition = "Snow";
+        }
+        else{
+            weatherCondition = "Unknown";
         }
 
         return weatherCondition;
@@ -283,17 +328,81 @@ public class WeatherBackEnd {
             }
         }
     }
-    
-    public static int[] hashMapToArr(HashMap<String, Integer> newMap){
-        //Collecting the values of the map
-        Collection<Integer> values = newMap.values();
-        Integer[] integerArray = values.toArray(new Integer[0]);
-        
-        //Converting the Integer array to int array
-        int[] intArray = new int[integerArray.length];
-        for(int i = 0;i<integerArray.length;i++){
-            intArray[i] = integerArray[i];
-        }
-        return intArray;
+
+    public static int getTemperatureForDay(JSONObject hourlyData, int sideCurrentIndex) {
+        JSONArray sideTemperatureData = (JSONArray) hourlyData.get("temperature_2m");   
+        double sideTempwithdec = (double) sideTemperatureData.get(sideCurrentIndex);
+        int sideTemp = (int) Math.round(sideTempwithdec);
+        return sideTemp;
     }
+
+    public static long getSideWeatherCode(JSONObject hourlyData, int sideCurrentIndex){
+        JSONArray sideWeatherCodelist = (JSONArray) hourlyData.get("weather_code");
+        long sideWeatherConditionCode = (long)sideWeatherCodelist.get(sideCurrentIndex);
+        return sideWeatherConditionCode;
+    }
+
+    public static String convertSideWeatherCodetoCondition(long sideWeatherCode){
+        String sideWeatherCondition = "";
+        if (sideWeatherCode == 0L) {
+            sideWeatherCondition = "Clear";
+        }
+
+        else if(sideWeatherCode <= 3L && sideWeatherCode > 0L ){
+            sideWeatherCondition = "Cloudy";
+        }
+
+        else if ((sideWeatherCode >= 51L && sideWeatherCode <= 67L) || (sideWeatherCode >= 80 && sideWeatherCode <=99)){
+            sideWeatherCondition = "Rainy";
+        }
+        
+        else if(sideWeatherCode >= 71L && sideWeatherCode <= 77L ){
+            sideWeatherCondition = "Snow";
+        }
+        else{
+            sideWeatherCondition = "Unknown";
+        }
+        System.out.println(sideWeatherCondition);
+        return sideWeatherCondition;
+    }
+
+    public static String[] getnextDay(List<String> nextFiveDaysTime){
+
+        //Converting list<String> to String[] array
+        String[] nextFiveDayTimeArr = nextFiveDaysTime.toArray(new String[0]);
+
+        //Holder Array for Days names
+        String[] daysOfWeek = new String[nextFiveDayTimeArr.length];
+
+        //Formatter for parsing
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+        for (int i = 0; i < nextFiveDayTimeArr.length; i++){
+            //Parsing the date string
+            LocalDateTime dateTime = LocalDateTime.parse(nextFiveDayTimeArr[i], formatter);
+            //Getting the day of the week
+            DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
+
+            // Convert the day of the week to a string and capitalize the first letter only
+            String dayOfWeekStr = dayOfWeek.toString();
+            String formattedDayOfWeek = dayOfWeekStr.substring(0, 1).toUpperCase() + dayOfWeekStr.substring(1).toLowerCase();
+            //Converting to String and storing into the array
+            daysOfWeek[i] = formattedDayOfWeek.toString();
+        }
+
+
+        return daysOfWeek;
+    }
+
+    public static String printName(String locationName) {
+        JSONArray locationData = getLocationData(locationName);
+        if (locationData == null) {
+            System.out.println("Location not entered.");
+        }
+        JSONObject location = (JSONObject) locationData.get(0);
+        String name = (String) location.get("name");
+
+        return name;
+
+    }        
 }

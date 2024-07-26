@@ -1,13 +1,8 @@
-// WeatherAppGUI.java
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -16,12 +11,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 import org.json.simple.JSONObject;
 
@@ -66,6 +60,14 @@ public class WeatherAppGUI extends JFrame {
             }
         });
         add(searchBar);
+
+        JLabel locationName = new JLabel();
+        locationName.setBounds(45, 90, 400, 60);
+        locationName.setFont(new Font("Space Grotesk", Font.BOLD, 40)); 
+        locationName.setText("Location");
+        locationName.setHorizontalAlignment(JLabel.CENTER);
+        locationName.setVerticalAlignment(JLabel.CENTER);
+        add(locationName);
 
         JLabel weather_ConditionImage = new JLabel(loadImage("src\\Assets\\cloudy-icon.png", 256, 256));
         weather_ConditionImage.setBounds(115, 170, 256, 256);
@@ -148,7 +150,7 @@ public class WeatherAppGUI extends JFrame {
         sideWeatherIcon1.setVerticalAlignment(JLabel.CENTER);
         JLabel sideDate1 = new JLabel();
         sideDate1.setBounds(94, 18, 235, 64);
-        sideDate1.setText("28/01/06");
+        sideDate1.setText("-");
         sideDate1.setHorizontalAlignment(JLabel.CENTER);
         sideDate1.setVerticalAlignment(JLabel.CENTER);
         //sideDate1.setBackground(Color.RED);
@@ -157,7 +159,7 @@ public class WeatherAppGUI extends JFrame {
         sideDate1.setForeground(new Color(0x363b4e));
         JLabel sideTemp1 = new JLabel();
         sideTemp1.setBounds(330, 18, 90, 64);
-        sideTemp1.setText("25°");
+        sideTemp1.setText("-°");
         sideTemp1.setHorizontalAlignment(JLabel.CENTER);
         sideTemp1.setVerticalAlignment(JLabel.CENTER);
         //sideTemp1.setBackground(Color.RED);
@@ -179,7 +181,7 @@ public class WeatherAppGUI extends JFrame {
         sideWeatherIcon2.setVerticalAlignment(JLabel.CENTER);
         JLabel sideDate2 = new JLabel();
         sideDate2.setBounds(94, 18, 235, 64);
-        sideDate2.setText("28/01/06");
+        sideDate2.setText("-");
         sideDate2.setHorizontalAlignment(JLabel.CENTER);
         sideDate2.setVerticalAlignment(JLabel.CENTER);
         //sideDate2.setBackground(Color.RED);
@@ -188,7 +190,7 @@ public class WeatherAppGUI extends JFrame {
         sideDate2.setForeground(new Color(0x363b4e));
         JLabel sideTemp2 = new JLabel();
         sideTemp2.setBounds(330, 18, 90, 64);
-        sideTemp2.setText("25°");
+        sideTemp2.setText("-°");
         sideTemp2.setHorizontalAlignment(JLabel.CENTER);
         sideTemp2.setVerticalAlignment(JLabel.CENTER);
         //sideTemp2.setBackground(Color.RED);
@@ -209,7 +211,7 @@ public class WeatherAppGUI extends JFrame {
         sideWeatherIcon3.setVerticalAlignment(JLabel.CENTER);
         JLabel sideDate3 = new JLabel();
         sideDate3.setBounds(94, 18, 235, 64);
-        sideDate3.setText("28/01/06");
+        sideDate3.setText("-");
         sideDate3.setHorizontalAlignment(JLabel.CENTER);
         sideDate3.setVerticalAlignment(JLabel.CENTER);
         //sideDate3.setBackground(Color.RED);
@@ -218,7 +220,7 @@ public class WeatherAppGUI extends JFrame {
         sideDate3.setForeground(new Color(0x363b4e));
         JLabel sideTemp3 = new JLabel();
         sideTemp3.setBounds(330, 18, 90, 64);
-        sideTemp3.setText("25°");
+        sideTemp3.setText("-°");
         sideTemp3.setHorizontalAlignment(JLabel.CENTER);
         sideTemp3.setVerticalAlignment(JLabel.CENTER);
         //sideTemp3.setBackground(Color.RED);
@@ -238,7 +240,7 @@ public class WeatherAppGUI extends JFrame {
         sideWeatherIcon4.setVerticalAlignment(JLabel.CENTER);
         JLabel sideDate4 = new JLabel();
         sideDate4.setBounds(94, 18, 235, 64);
-        sideDate4.setText("28/01/06");
+        sideDate4.setText("-");
         sideDate4.setHorizontalAlignment(JLabel.CENTER);
         sideDate4.setVerticalAlignment(JLabel.CENTER);
         //sideDate4.setBackground(Color.RED);
@@ -247,7 +249,7 @@ public class WeatherAppGUI extends JFrame {
         sideDate4.setForeground(new Color(0x363b4e));
         JLabel sideTemp4 = new JLabel();
         sideTemp4.setBounds(330, 18, 90, 64);
-        sideTemp4.setText("25°");
+        sideTemp4.setText("-°");
         sideTemp4.setHorizontalAlignment(JLabel.CENTER);
         sideTemp4.setVerticalAlignment(JLabel.CENTER);
         //sideTemp4.setBackground(Color.RED);
@@ -267,7 +269,7 @@ public class WeatherAppGUI extends JFrame {
         sideWeatherIcon5.setVerticalAlignment(JLabel.CENTER);
         JLabel sideDate5 = new JLabel();
         sideDate5.setBounds(94, 18, 235, 64);
-        sideDate5.setText("28/01/06");
+        sideDate5.setText("-");
         sideDate5.setHorizontalAlignment(JLabel.CENTER);
         sideDate5.setVerticalAlignment(JLabel.CENTER);
         //sideDate5.setBackground(Color.RED);
@@ -276,7 +278,7 @@ public class WeatherAppGUI extends JFrame {
         sideDate5.setForeground(new Color(0x363b4e));
         JLabel sideTemp5 = new JLabel();
         sideTemp5.setBounds(330, 18, 90, 64);
-        sideTemp5.setText("25°");
+        sideTemp5.setText("-    °");
         sideTemp5.setHorizontalAlignment(JLabel.CENTER);
         sideTemp5.setVerticalAlignment(JLabel.CENTER);
         //sideTemp5.setBackground(Color.RED);
@@ -322,9 +324,11 @@ public class WeatherAppGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String userInput = searchBar.getText();
+
                 if (userInput.replaceAll("\\s", "").length() <= 0) {
                     return;
                 }
+
 
                 weatherData = WeatherBackEnd.getWeatherData(userInput);
                 if (weatherData == null) {
@@ -366,6 +370,156 @@ public class WeatherAppGUI extends JFrame {
 
                 double wind = (double) weatherData.get("windSpeed");
                 windText.setText("<html><b>Wind</b> : " + wind + " km/hr</html>");
+
+                //SideData 1
+                int tempday1 = (int) weatherData.get("sideTemperature1");
+                sideTemp1.setText(tempday1+"°");
+                
+                //SideData 2
+                int tempday2 = (int) weatherData.get("sideTemperature2");
+                sideTemp2.setText(tempday2+"°");
+
+                //SideData 3
+                int tempday3 = (int) weatherData.get("sideTemperature3");
+                sideTemp3.setText(tempday3+"°");
+
+                //SideData 4
+                int tempday4 = (int) weatherData.get("sideTemperature4");
+                sideTemp4.setText(tempday4+"°");
+
+                //SideData 3
+                int tempday5 = (int) weatherData.get("sideTemperature5");
+                sideTemp5.setText(tempday5+"°");
+
+                //Condition day 1
+                String sideWeatherCondition1 = (String) weatherData.get("sideWeatherConditionkey1");
+                if (sideWeatherCondition1 == null) {
+                    System.out.println("Error: Weather condition is null.");
+                    return;
+                }
+                switch (sideWeatherCondition1) {
+                    case "Clear":
+                    sideWeatherIcon1.setIcon(loadImage("src\\Assets\\clear-icon.png", 64, 64));
+                        break;
+                    case "Cloudy":
+                    sideWeatherIcon1.setIcon(loadImage("src\\Assets\\cloudy-icon.png", 64, 64));
+                        break;
+                    case "Rainy":
+                    sideWeatherIcon1.setIcon(loadImage("src\\Assets\\rainy-icon.png", 64, 64));
+                        break;
+                    case "Snow":
+                    sideWeatherIcon1.setIcon(loadImage("src\\Assets\\snow-icon.png", 64, 64));
+                        break;
+                    default:
+                    sideWeatherIcon1.setIcon(loadImage("src\\Assets\\unknown-icon.png", 64, 64));
+                        break;
+                }
+
+                //Condition day 2
+                String sideWeatherCondition2 = (String) weatherData.get("sideWeatherConditionkey2");
+                if (sideWeatherCondition2 == null) {
+                    System.out.println("Error: Weather condition is null.");
+                    return;
+                }
+                switch (sideWeatherCondition2) {
+                    case "Clear":
+                    sideWeatherIcon2.setIcon(loadImage("src\\Assets\\clear-icon.png", 64, 64));
+                        break;
+                    case "Cloudy":
+                    sideWeatherIcon2.setIcon(loadImage("src\\Assets\\cloudy-icon.png", 64, 64));
+                        break;
+                    case "Rainy":
+                    sideWeatherIcon2.setIcon(loadImage("src\\Assets\\rainy-icon.png", 64, 64));
+                        break;
+                    case "Snow":
+                    sideWeatherIcon2.setIcon(loadImage("src\\Assets\\snow-icon.png", 64, 64));
+                        break;
+                    default:
+                    sideWeatherIcon2.setIcon(loadImage("src\\Assets\\unknown-icon.png", 64, 64));
+                        break;
+                }
+
+                //Condition day 3
+                String sideWeatherCondition3 = (String) weatherData.get("sideWeatherConditionkey3");
+                if (sideWeatherCondition3 == null) {
+                    System.out.println("Error: Weather condition is null.");
+                    return;
+                }
+                switch (sideWeatherCondition3) {
+                    case "Clear":
+                    sideWeatherIcon3.setIcon(loadImage("src\\Assets\\clear-icon.png", 64, 64));
+                        break;
+                    case "Cloudy":
+                    sideWeatherIcon3.setIcon(loadImage("src\\Assets\\cloudy-icon.png", 64, 64));
+                        break;
+                    case "Rainy":
+                    sideWeatherIcon3.setIcon(loadImage("src\\Assets\\rainy-icon.png", 64, 64));
+                        break;
+                    case "Snow":
+                    sideWeatherIcon3.setIcon(loadImage("src\\Assets\\snow-icon.png", 64, 64));
+                        break;
+                    default:
+                    sideWeatherIcon3.setIcon(loadImage("src\\Assets\\unknown-icon.png", 64, 64));
+                        break;
+                }
+
+                //Condition day 4
+                String sideWeatherCondition4 = (String) weatherData.get("sideWeatherConditionkey4");
+                if (sideWeatherCondition4 == null) {
+                    System.out.println("Error: Weather condition is null.");
+                    return;
+                }
+                switch (sideWeatherCondition4) {
+                    case "Clear":
+                    sideWeatherIcon4.setIcon(loadImage("src\\Assets\\clear-icon.png", 64, 64));
+                        break;
+                    case "Cloudy":
+                    sideWeatherIcon4.setIcon(loadImage("src\\Assets\\cloudy-icon.png", 64, 64));
+                        break;
+                    case "Rainy":
+                    sideWeatherIcon4.setIcon(loadImage("src\\Assets\\rainy-icon.png", 64, 64));
+                        break;
+                    case "Snow":
+                    sideWeatherIcon4.setIcon(loadImage("src\\Assets\\snow-icon.png", 64, 64));
+                        break;
+                    default:
+                    sideWeatherIcon4.setIcon(loadImage("src\\Assets\\unknown-icon.png", 64, 64));
+                        break;
+                }
+
+                //Condition day 5
+                String sideWeatherCondition5 = (String) weatherData.get("sideWeatherConditionkey5");
+                if (sideWeatherCondition5 == null) {
+                    System.out.println("Error: Weather condition is null.");
+                    return;
+                }
+                switch (sideWeatherCondition5) {
+                    case "Clear":
+                    sideWeatherIcon5.setIcon(loadImage("src\\Assets\\clear-icon.png", 64, 64));
+                        break;
+                    case "Cloudy":
+                    sideWeatherIcon5.setIcon(loadImage("src\\Assets\\cloudy-icon.png", 64, 64));
+                        break;
+                    case "Rainy":
+                    sideWeatherIcon5.setIcon(loadImage("src\\Assets\\rainy-icon.png", 64, 64));
+                        break;
+                    case "Snow":
+                    sideWeatherIcon5.setIcon(loadImage("src\\Assets\\snow-icon.png", 64, 64));
+                        break;
+                    default:
+                    sideWeatherIcon5.setIcon(loadImage("src\\Assets\\unknown-icon.png", 64, 64));
+                        break;
+                }
+
+                String[] daysOfWeek = WeatherBackEnd.getnextDay(WeatherBackEnd.getNextFiveDaysTime());
+                sideDate1.setText(daysOfWeek[0]);
+                sideDate2.setText(daysOfWeek[1]);
+                sideDate3.setText(daysOfWeek[2]);
+                sideDate4.setText(daysOfWeek[3]);
+                sideDate5.setText(daysOfWeek[4]);
+
+                locationName.setText(WeatherBackEnd.printName(userInput));
+
             }
         });
         add(searchButton);
@@ -390,5 +544,7 @@ public class WeatherAppGUI extends JFrame {
         System.out.println("Could not find resource");
         return null;
     }
+
+    
 
 }
