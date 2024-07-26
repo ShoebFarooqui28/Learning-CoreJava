@@ -359,7 +359,6 @@ public class WeatherBackEnd {
         else{
             sideWeatherCondition = "Unknown";
         }
-        System.out.println(sideWeatherCondition);
         return sideWeatherCondition;
     }
 
