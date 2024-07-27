@@ -1,2 +1,7 @@
-package Sortings.InsertionSort;public class Main {
+package Sortings.InsertionSort;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
 }
